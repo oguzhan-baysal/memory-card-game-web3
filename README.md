@@ -20,7 +20,7 @@ Build a small part of a card memory game based on your assigned role. This is me
 ### 🚀 **Setup Guide:**
 1. Clone the repository:
    ```bash
-   git clone https://github.com/sevengit-wq/assessment-project.git
+   git clone https://github.com/sevengit-wq/assessment-project.git Card-Memory
    ```
 2. Navigate to the project directory:
    ```bash
