@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { useWeb3 } from './Web3Context';
-import MemoryGameABI from '../contracts/MemoryGame.json';
+import MemoryGameArtifact from '../contracts/MemoryGame.json';
 import contractAddresses from '../contracts/contract-address.json';
 
 const BlockchainContext = createContext();
@@ -36,7 +36,7 @@ export const BlockchainProvider = ({ children }) => {
         const signer = await provider.getSigner();
         const memoryGameContract = new ethers.Contract(
           contractAddresses.MemoryGame,
-          JSON.parse(MemoryGameABI),
+          MemoryGameArtifact.abi,
           signer
         );
 
