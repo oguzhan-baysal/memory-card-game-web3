@@ -8,6 +8,8 @@ A comprehensive memory card game featuring modern web technologies, blockchain i
 
 ---
 
+![Image](https://github.com/user-attachments/assets/88c83b11-5a91-4d2a-8502-142ea02b1bfb)
+
 ## 🌟 **Features**
 
 ### 🎯 **Game Features**
