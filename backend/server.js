@@ -10,12 +10,6 @@ const memoryRoutes = require('./routes/memoryRoutes');
 // Load environment variables
 dotenv.config({ path: './config/.env' });
 
-// Check if MONGODB_URI is loaded
-if (!process.env.MONGODB_URI) {
-  console.error('Error: MONGODB_URI is not defined in .env');
-  process.exit(1);
-}
-
 // Initialize Express app
 const app = express();
 

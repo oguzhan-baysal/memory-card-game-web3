@@ -22,7 +22,6 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   const { username, password } = req.body;
 
-  res.status(200).json({ token:"123", userID: "123" }); // Include userID in the response
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -34,7 +33,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid username or password' });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'fallback-secret', { expiresIn: '1h' });
     res.status(200).json({ token, userID: user._id }); // Include userID in the response
   } catch (error) {
     res.status(500).json({ message: 'Error logging in', error });

@@ -1,6 +1,9 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Web3Provider } from './context/Web3Context';
+import { BlockchainProvider } from './context/BlockchainContext';
+import './index.css';
 import Login from './Login/Login';
 import Register from './Login/Register';
 import Play from './MemoryCardGame/Play';
@@ -10,7 +13,7 @@ import MemoryCardGame from './MemoryCardGame/MemoryCardGame';
 import Congratulations from "./MemoryCardGame/Congratulation";
 import CongtEasy from "./MemoryCardGame/Congratseasy";
 import CongtNormal from "./MemoryCardGame/Congratsnormal";
-
+import GameHistory from "./GameHistory/GameHistory";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -25,38 +28,46 @@ const App = () => {
   // };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/congratulations"
-      element={isAuthenticated ? <Congratulations /> : <Navigate to="/login" />}
-      />
-     
-      <Route path="/congt-easy"
-      element={isAuthenticated ? <CongtEasy /> : <Navigate to="/login" />}
-      />
-      <Route path="/congt-normal"
-      element={isAuthenticated ? <CongtNormal /> : <Navigate to="/login" />}
-      />
-        <Route path="/easy" 
-       element={isAuthenticated ? <Easy /> : <Navigate to="/login" />}
-        />
-        <Route path="/medium" 
-         element={isAuthenticated ? <Medium /> : <Navigate to="/login" />}
-         />
-        <Route
-          path="/play"
-          element={isAuthenticated ? <Play /> : <Navigate to="/login" />}
-        />
-  
-        <Route
-          path="/memory-card-game"
-          element={isAuthenticated ? <MemoryCardGame /> : <Navigate to="/login" />}
-        />
-        <Route path="/" element={<Navigate to="/login" />} />
-      </Routes>
-    </Router>
+    <Web3Provider>
+      <BlockchainProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/congratulations"
+          element={isAuthenticated ? <Congratulations /> : <Navigate to="/login" />}
+          />
+         
+          <Route path="/congt-easy"
+          element={isAuthenticated ? <CongtEasy /> : <Navigate to="/login" />}
+          />
+          <Route path="/congt-normal"
+          element={isAuthenticated ? <CongtNormal /> : <Navigate to="/login" />}
+          />
+            <Route path="/easy" 
+           element={isAuthenticated ? <Easy /> : <Navigate to="/login" />}
+            />
+            <Route path="/medium" 
+             element={isAuthenticated ? <Medium /> : <Navigate to="/login" />}
+             />
+            <Route
+              path="/play"
+              element={isAuthenticated ? <Play /> : <Navigate to="/login" />}
+            />
+      
+            <Route
+              path="/memory-card-game"
+              element={isAuthenticated ? <MemoryCardGame /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/history"
+              element={isAuthenticated ? <GameHistory /> : <Navigate to="/login" />}
+            />
+            <Route path="/" element={<Navigate to="/login" />} />
+          </Routes>
+        </Router>
+      </BlockchainProvider>
+    </Web3Provider>
   );
 };
 

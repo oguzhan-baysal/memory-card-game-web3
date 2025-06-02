@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
+import WalletConnection from "../components/WalletConnection";
 import backgroundGif from "../assets/images/play.gif";
 import calmBackground from "../assets/images/calm-wallpaper.jpg";
 import backgroundMusic from "../assets/audio/background-music.mp3";
@@ -51,7 +52,7 @@ const modalPlayStyles = {
     borderRadius: "20px",
     padding: "40px",
     maxWidth: "600px",
-    height: "200px",
+    height: "280px",
     width: "90%",
     color: "#fff",
     textAlign: "center",
@@ -59,7 +60,34 @@ const modalPlayStyles = {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+    overflow: "visible",
+  },
+};
+
+const walletModalStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+    zIndex: 999,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     overflow: "hidden",
+  },
+  content: {
+    backgroundColor: "#1e1e2e",
+    border: "2px solid #4a4e69",
+    borderRadius: "20px",
+    padding: "20px",
+    maxWidth: "500px",
+    width: "90%",
+    color: "#fff",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    overflow: "visible",
+    height: "auto",
+    maxHeight: "80vh",
   },
 };
 
@@ -67,6 +95,7 @@ const Play = () => {
   const navigate = useNavigate();
   const [SettingsmodalIsOpen, setModalSettingIsOpen] = useState(false);
   const [PlaymodalIsOpen, setModalPlayIsOpen] = useState(false);
+  const [WalletmodalIsOpen, setModalWalletIsOpen] = useState(false);
   const [difficulty, setDifficulty] = useState(null);
   const [isCalmMode, setIsCalmMode] = useState(false);
   
@@ -85,6 +114,9 @@ const Play = () => {
   const clickAudioRef = useRef(null);
 
   useEffect(() => {
+    // Modal accessibility ayarı
+    Modal.setAppElement('#root');
+    
     bgAudioRef.current = new Audio(backgroundMusic);
     hoverAudioRef.current = new Audio(buttonHoverSound);
     clickAudioRef.current = new Audio(buttonClickSound);
@@ -170,6 +202,16 @@ const Play = () => {
     setModalPlayIsOpen(false);
   };
 
+  const WalletopenModal = () => {
+    playClickSound();
+    setModalWalletIsOpen(true);
+  };
+
+  const WalletcloseModal = () => {
+    playClickSound();
+    setModalWalletIsOpen(false);
+  };
+
   const handleDifficultySelect = (level) => {
     setDifficulty(level);
   };
@@ -229,6 +271,23 @@ const Play = () => {
           className={`game-button ${isCalmMode ? "calm-button" : ""}`}
           onClick={() => {
             playClickSound();
+            navigate('/history');
+          }}
+          onMouseEnter={playHoverSound}
+        >
+          Game History
+        </button>
+        <button
+          className={`game-button ${isCalmMode ? "calm-button" : ""}`}
+          onClick={WalletopenModal}
+          onMouseEnter={playHoverSound}
+        >
+          Web3 Wallet
+        </button>
+        <button
+          className={`game-button ${isCalmMode ? "calm-button" : ""}`}
+          onClick={() => {
+            playClickSound();
             alert("Instructions coming soon!");
           }}
           onMouseEnter={playHoverSound}
@@ -243,6 +302,8 @@ const Play = () => {
           Settings
         </button>
       </div>
+
+      {/* Settings Modal */}
       <Modal
         isOpen={SettingsmodalIsOpen}
         onRequestClose={SettingcloseModal}
@@ -299,22 +360,9 @@ const Play = () => {
             className="volume-slider"
           />
         </div>
-
-        {/* <div className="calm-mode">
-          <h2 className={`${isCalmMode ? "calm-mode-label" : ""} modal-h2`}>
-            Calm Mode
-          </h2>
-          <label className="switch">
-            <input
-              type="checkbox"
-              checked={isCalmMode}
-              onChange={toggleCalmMode}
-            />
-            <span className="slider round"></span>
-          </label>
-        </div> */}
       </Modal>
 
+      {/* Play Modal */}
       <Modal
         isOpen={PlaymodalIsOpen}
         onRequestClose={PlaycloseModal}
@@ -392,6 +440,39 @@ const Play = () => {
           >
             Accept
           </button>
+        </div>
+      </Modal>
+
+      {/* Web3 Wallet Modal */}
+      <Modal
+        isOpen={WalletmodalIsOpen}
+        onRequestClose={WalletcloseModal}
+        style={{
+          ...walletModalStyles,
+          content: {
+            ...walletModalStyles.content,
+            backgroundColor: isCalmMode ? "#86a17d" : "#1e1e2e",
+          },
+        }}
+      >
+        <button
+          onClick={WalletcloseModal}
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            color: "#fff",
+            zIndex: 10,
+          }}
+        >
+          <X size={24} />
+        </button>
+
+        <div style={{ marginTop: "10px" }}>
+          <WalletConnection />
         </div>
       </Modal>
     </div>
