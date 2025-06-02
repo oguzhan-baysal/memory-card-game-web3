@@ -40,7 +40,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="w-full h-full min-h-screen min-w-full bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800 flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-sm sm:max-w-md lg:max-w-lg space-y-6 sm:space-y-8">
         <div className="text-center">
           <div className="mx-auto h-10 w-10 sm:h-12 sm:w-12 bg-white rounded-full flex items-center justify-center mb-3 sm:mb-4">
@@ -56,7 +56,7 @@ const Login = ({ onLogin }) => {
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-2xl p-6 sm:p-8 border border-white/20">
+        <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-2xl p-6 sm:p-8 border border-white/20 lg:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] lg:border-white/30">
           <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
             <div>
               <input

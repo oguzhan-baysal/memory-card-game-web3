@@ -51,7 +51,9 @@ const saveGameData = async (gameData) => {
 };
 
 // Styled Components
-const StyledGameContainer = styled(Box)(({ theme, mouseDisabled }) => ({
+const StyledGameContainer = styled(Box, {
+  shouldForwardProp: (prop) => prop !== 'mouseDisabled',
+})(({ theme, mouseDisabled }) => ({
   minHeight: "100vh",
   width: "100vw",
   display: "flex",
@@ -326,14 +328,18 @@ const  MemoryEasy = () => {
     const handleFirstClick = () => {
       if (!musicStarted && audioRef.current) {
         audioRef.current.volume = bgVolume / 100;
-        audioRef.current.play().catch((error) => console.error("Audio play error:", error));
-        setMusicStarted(true);
+        audioRef.current.play()
+          .then(() => setMusicStarted(true))
+          .catch((error) => {
+            // Modern browsers require user interaction before playing audio
+            console.log("Audio autoplay prevented - waiting for user interaction");
+          });
       }
     };
     document.addEventListener("click", handleFirstClick);
 
     return () => document.removeEventListener("click", handleFirstClick);
-  }, []);
+  }, []); // Empty dependency array - only run once on mount
 
   useEffect(() => {
     let interval;
